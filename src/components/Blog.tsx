@@ -118,7 +118,7 @@ const Hero = () => (
           <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl">
             {/* 替换为你自己的头像路径 */}
             <img
-              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+              src="/avatar.png"
               alt="头像"
               className="w-full h-full object-cover"
             />
