@@ -14,5 +14,5 @@ const recentPosts = getRecentPostSummaries(posts, 3);
 ---
 
 <BaseLayout title="DESIGNER.BLOG" description="极简风格的个人博客">
-  <Blog client:load posts={recentPosts} />
+  <Blog client:idle posts={recentPosts} />
 </BaseLayout>

@@ -16,5 +16,5 @@ const uniqueTags = getUniqueTags(allPosts);
 ---
 
 <BaseLayout title="文章 - DESIGNER.BLOG" description="我的技术博客">
-  <BlogList client:load posts={allPosts} tags={uniqueTags} />
+  <BlogList client:idle posts={allPosts} tags={uniqueTags} />
 </BaseLayout>

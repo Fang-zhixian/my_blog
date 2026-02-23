@@ -20,7 +20,7 @@ const { Content } = await render(post);
 ---
 
 <BaseLayout title={`${post.data.title} - DESIGNER.BLOG`} description={post.data.description}>
-  <BlogPost client:load post={post}>
+  <BlogPost client:idle post={post}>
     <Content />
   </BlogPost>
 </BaseLayout>
