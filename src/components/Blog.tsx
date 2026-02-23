@@ -5,11 +5,12 @@
  */
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronRight, Github, Twitter, Mail } from 'lucide-react';
+import { ChevronRight, Github, Twitter, Mail, Link2 } from 'lucide-react';
 import Navbar from './layout/Navbar';
 import MobileMenu from './layout/MobileMenu';
 import Footer from './layout/Footer';
 import type { PostSummary } from '../types/blog';
+import { siteConfig } from '../config/site';
 
 const NAV_ITEMS = [
   { name: '首页', href: '/' },
@@ -22,6 +23,15 @@ const FOOTER_LINKS = [
   { href: '#', label: 'Privacy Policy' },
   { href: '#', label: 'Sitemap' },
 ];
+
+const CONTACT_ICON_MAP = {
+  github: Github,
+  twitter: Twitter,
+  email: Mail,
+  linkedin: Link2,
+  website: Link2,
+  other: Link2,
+} as const;
 
 const Hero = () => (
   <section className="mb-32">
@@ -96,15 +106,21 @@ const Hero = () => (
             <ChevronRight size={16} />
           </a>
           <div className="flex items-center gap-4 text-gray-400">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-              <Github size={20} className="hover:text-black cursor-pointer transition-colors" />
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-              <Twitter size={20} className="hover:text-black cursor-pointer transition-colors" />
-            </a>
-            <a href="mailto:hello@example.com">
-              <Mail size={20} className="hover:text-black cursor-pointer transition-colors" />
-            </a>
+            {siteConfig.contacts.map((contact) => {
+              const Icon = CONTACT_ICON_MAP[contact.platform];
+              const isExternal = contact.href.startsWith('http');
+              return (
+                <a
+                  key={contact.label}
+                  href={contact.href}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                  aria-label={contact.label}
+                >
+                  <Icon size={20} className="hover:text-black cursor-pointer transition-colors" />
+                </a>
+              );
+            })}
           </div>
         </motion.div>
       </div>
@@ -151,7 +167,7 @@ const CTASection = () => (
   <section className="mt-32 p-12 bg-black text-white rounded-3xl flex flex-col items-center text-center">
     <h2 className="text-3xl md:text-5xl font-bold mb-6">准备好开始合作了吗？</h2>
     <p className="text-gray-400 mb-10 max-w-md">无论是项目咨询还是简单的打个招呼，我都非常欢迎。</p>
-    <a href="mailto:hello@example.com" className="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors">
+    <a href={siteConfig.contacts.find((contact) => contact.platform === 'email')?.href || 'mailto:hello@example.com'} className="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors">
       联系我
     </a>
   </section>
@@ -205,7 +221,7 @@ export default function Blog({ posts }: Props) {
         <CTASection />
       </main>
 
-      <Footer maxWidthClass="max-w-5xl" links={FOOTER_LINKS} authorName="方植贤" />
+      <Footer maxWidthClass="max-w-5xl" links={FOOTER_LINKS} authorName={siteConfig.author} />
     </div>
   );
 }

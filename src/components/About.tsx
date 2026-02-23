@@ -3,10 +3,11 @@
  */
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Github, Twitter, Mail, MapPin, Calendar } from 'lucide-react';
+import { Github, Twitter, Mail, MapPin, Calendar, Link2 } from 'lucide-react';
 import Navbar from './layout/Navbar';
 import MobileMenu from './layout/MobileMenu';
 import Footer from './layout/Footer';
+import { siteConfig } from '../config/site';
 
 const NAV_ITEMS = [
   { name: '首页', href: '/' },
@@ -15,6 +16,15 @@ const NAV_ITEMS = [
 ];
 
 const FOOTER_LINKS = [{ href: '/blog', label: '← 返回文章列表' }];
+
+const CONTACT_ICON_MAP = {
+  github: Github,
+  twitter: Twitter,
+  email: Mail,
+  linkedin: Link2,
+  website: Link2,
+  other: Link2,
+} as const;
 
 export default function About() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -124,33 +134,27 @@ export default function About() {
         >
           <h3 className="text-lg font-bold mb-4">联系方式</h3>
           <div className="flex gap-4">
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors"
-            >
-              <Github size={20} />
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors"
-            >
-              <Twitter size={20} />
-            </a>
-            <a
-              href="mailto:hello@example.com"
-              className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors"
-            >
-              <Mail size={20} />
-            </a>
+            {siteConfig.contacts.map((contact) => {
+              const Icon = CONTACT_ICON_MAP[contact.platform];
+              const isExternal = contact.href.startsWith('http');
+              return (
+                <a
+                  key={contact.label}
+                  href={contact.href}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                  aria-label={contact.label}
+                  className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors"
+                >
+                  <Icon size={20} />
+                </a>
+              );
+            })}
           </div>
         </motion.div>
       </main>
 
-      <Footer maxWidthClass="max-w-3xl" links={FOOTER_LINKS} authorName="方植贤" />
+      <Footer maxWidthClass="max-w-3xl" links={FOOTER_LINKS} authorName={siteConfig.author} />
     </div>
   );
 }
