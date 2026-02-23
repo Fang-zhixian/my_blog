@@ -4,7 +4,7 @@
  */
 import BlogPost from '../../components/BlogPost';
 import '../../styles/global.css';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 // 生成静态路径
 export async function getStaticPaths() {
@@ -16,6 +16,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+const { Content } = await render(post);
 ---
 
 <!DOCTYPE html>
@@ -28,6 +29,8 @@ const { post } = Astro.props;
     <title>{post.data.title} - DESIGNER.BLOG</title>
   </head>
   <body>
-    <BlogPost client:load post={post} />
+    <BlogPost client:load post={post}>
+      <Content />
+    </BlogPost>
   </body>
 </html>

@@ -89,7 +89,12 @@ const Footer = () => {
   );
 };
 
-export default function BlogPost({ post }) {
+interface Props {
+  post: any;
+  children?: React.ReactNode;
+}
+
+export default function BlogPost({ post, children }: Props) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -184,7 +189,7 @@ export default function BlogPost({ post }) {
             prose-img:rounded-xl
           "
         >
-          <slot />
+          {children}
         </motion.article>
 
         {/* 文章底部 */}
