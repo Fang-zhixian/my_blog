@@ -2,92 +2,19 @@
  * 关于页面组件
  */
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Github, Twitter, Mail, MapPin, Calendar } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Github, Twitter, Mail, MapPin, Calendar } from 'lucide-react';
+import Navbar from './layout/Navbar';
+import MobileMenu from './layout/MobileMenu';
+import Footer from './layout/Footer';
 
-const Navbar = ({ isScrolled, isMobileMenuOpen, setIsMobileMenuOpen }) => {
-  const navItems = [
-    { name: '首页', href: '/' },
-    { name: '文章', href: '/blog' },
-    { name: '关于', href: '/about', active: true },
-  ];
+const NAV_ITEMS = [
+  { name: '首页', href: '/' },
+  { name: '文章', href: '/blog' },
+  { name: '关于', href: '/about' },
+];
 
-  return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/80 backdrop-blur-md border-b border-gray-100 py-4' : 'bg-transparent py-6'
-    }`}>
-      <div className="max-w-3xl mx-auto px-6 flex justify-between items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="text-xl font-bold tracking-tighter"
-        >
-          <a href="/">DESIGNER<span className="text-gray-400">.BLOG</span></a>
-        </motion.div>
-
-        <div className="hidden md:flex space-x-8 text-sm font-medium">
-          {navItems.map((item, index) => (
-            <motion.a
-              key={item.name}
-              href={item.href}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className={`hover:text-gray-500 transition-colors ${item.active ? 'text-black' : 'text-gray-400'}`}
-            >
-              {item.name}
-            </motion.a>
-          ))}
-        </div>
-
-        <div className="md:hidden">
-          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </div>
-    </nav>
-  );
-};
-
-const MobileMenu = ({ isOpen }) => {
-  const navItems = [
-    { name: '首页', href: '/' },
-    { name: '文章', href: '/blog' },
-    { name: '关于', href: '/about' },
-  ];
-
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          className="fixed top-16 left-0 w-full bg-white z-40 border-b border-gray-100 md:hidden overflow-hidden"
-        >
-          <div className="flex flex-col p-6 space-y-4">
-            {navItems.map((item) => (
-              <a key={item.name} href={item.href} className="text-lg font-medium">{item.name}</a>
-            ))}
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
-
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
-  return (
-    <footer className="max-w-3xl mx-auto px-6 py-12 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-      <p>© {currentYear} 陈志贤. Built with Astro & Tailwind.</p>
-      <div className="flex space-x-6 mt-4 md:mt-0">
-        <a href="/blog" className="hover:text-black transition-colors">← 返回文章列表</a>
-      </div>
-    </footer>
-  );
-};
+const FOOTER_LINKS = [{ href: '/blog', label: '← 返回文章列表' }];
 
 export default function About() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -107,8 +34,11 @@ export default function About() {
         isScrolled={isScrolled}
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
+        navItems={NAV_ITEMS}
+        maxWidthClass="max-w-3xl"
+        activePath="/about"
       />
-      <MobileMenu isOpen={isMobileMenuOpen} />
+      <MobileMenu isOpen={isMobileMenuOpen} navItems={NAV_ITEMS} />
 
       <main className="max-w-3xl mx-auto px-6 pt-32 pb-20">
         {/* 头像和基本信息 */}
@@ -127,17 +57,17 @@ export default function About() {
           </div>
 
           <div className="text-center md:text-left">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">陈志贤</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">方植贤</h1>
             <p className="text-gray-500 text-lg mb-6">全栈开发者 / 设计师</p>
 
             <div className="flex flex-wrap justify-center md:justify-start gap-4 text-sm text-gray-400">
               <div className="flex items-center gap-2">
                 <MapPin size={16} />
-                <span>中国 · 北京</span>
+                <span>中国 · 深圳</span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar size={16} />
-                <span>从事开发 5+ 年</span>
+                <span>从事开发 2+ 年</span>
               </div>
             </div>
           </div>
@@ -154,7 +84,7 @@ export default function About() {
         >
           <h2>关于我</h2>
           <p>
-            你好！我是陈志贤，一名热爱技术和设计的开发者。我热衷于构建高性能、易用且美观的数字产品。
+            你好！我是方植贤，一名热爱技术和设计的开发者。我热衷于构建高性能、易用且美观的数字产品。
           </p>
           <p>
             我的专业领域包括前端开发（React、TypeScript、Astro）、UI/UX 设计，以及全栈开发。
@@ -220,7 +150,7 @@ export default function About() {
         </motion.div>
       </main>
 
-      <Footer />
+      <Footer maxWidthClass="max-w-3xl" links={FOOTER_LINKS} authorName="方植贤" />
     </div>
   );
 }

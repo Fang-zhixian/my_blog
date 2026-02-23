@@ -3,7 +3,7 @@
  * 文章详情页
  */
 import BlogPost from '../../components/BlogPost';
-import '../../styles/global.css';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 
 // 生成静态路径
@@ -19,18 +19,8 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={post.data.description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{post.data.title} - DESIGNER.BLOG</title>
-  </head>
-  <body>
-    <BlogPost client:load post={post}>
-      <Content />
-    </BlogPost>
-  </body>
-</html>
+<BaseLayout title={`${post.data.title} - DESIGNER.BLOG`} description={post.data.description}>
+  <BlogPost client:load post={post}>
+    <Content />
+  </BlogPost>
+</BaseLayout>

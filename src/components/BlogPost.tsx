@@ -2,92 +2,19 @@
  * 文章详情页组件
  */
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronLeft, Clock, Calendar } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ChevronLeft, Clock, Calendar } from 'lucide-react';
+import Navbar from './layout/Navbar';
+import MobileMenu from './layout/MobileMenu';
+import Footer from './layout/Footer';
 
-const Navbar = ({ isScrolled, isMobileMenuOpen, setIsMobileMenuOpen }) => {
-  const navItems = [
-    { name: '首页', href: '/' },
-    { name: '文章', href: '/blog' },
-    { name: '关于', href: '/about' },
-  ];
+const NAV_ITEMS = [
+  { name: '首页', href: '/' },
+  { name: '文章', href: '/blog' },
+  { name: '关于', href: '/about' },
+];
 
-  return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/80 backdrop-blur-md border-b border-gray-100 py-4' : 'bg-transparent py-6'
-    }`}>
-      <div className="max-w-3xl mx-auto px-6 flex justify-between items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="text-xl font-bold tracking-tighter"
-        >
-          <a href="/">DESIGNER<span className="text-gray-400">.BLOG</span></a>
-        </motion.div>
-
-        <div className="hidden md:flex space-x-8 text-sm font-medium">
-          {navItems.map((item, index) => (
-            <motion.a
-              key={item.name}
-              href={item.href}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="hover:text-gray-500 transition-colors"
-            >
-              {item.name}
-            </motion.a>
-          ))}
-        </div>
-
-        <div className="md:hidden">
-          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </div>
-    </nav>
-  );
-};
-
-const MobileMenu = ({ isOpen }) => {
-  const navItems = [
-    { name: '首页', href: '/' },
-    { name: '文章', href: '/blog' },
-    { name: '关于', href: '/about' },
-  ];
-
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          className="fixed top-16 left-0 w-full bg-white z-40 border-b border-gray-100 md:hidden overflow-hidden"
-        >
-          <div className="flex flex-col p-6 space-y-4">
-            {navItems.map((item) => (
-              <a key={item.name} href={item.href} className="text-lg font-medium">{item.name}</a>
-            ))}
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
-
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
-  return (
-    <footer className="max-w-3xl mx-auto px-6 py-12 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-      <p>© {currentYear} 陈志贤. Built with Astro & Tailwind.</p>
-      <div className="flex space-x-6 mt-4 md:mt-0">
-        <a href="/blog" className="hover:text-black transition-colors">← 返回文章列表</a>
-      </div>
-    </footer>
-  );
-};
+const FOOTER_LINKS = [{ href: '/blog', label: '← 返回文章列表' }];
 
 interface Props {
   post: any;
@@ -118,8 +45,11 @@ export default function BlogPost({ post, children }: Props) {
         isScrolled={isScrolled}
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
+        navItems={NAV_ITEMS}
+        maxWidthClass="max-w-3xl"
+        activePath="/blog"
       />
-      <MobileMenu isOpen={isMobileMenuOpen} />
+      <MobileMenu isOpen={isMobileMenuOpen} navItems={NAV_ITEMS} />
 
       <main className="max-w-3xl mx-auto px-6 pt-32 pb-20">
         {/* 返回按钮 */}
@@ -208,7 +138,7 @@ export default function BlogPost({ post, children }: Props) {
         </motion.div>
       </main>
 
-      <Footer />
+      <Footer maxWidthClass="max-w-3xl" links={FOOTER_LINKS} authorName="方植贤" />
     </div>
   );
 }

@@ -3,7 +3,7 @@
  * 文章列表页
  */
 import BlogList from '../../components/BlogList';
-import '../../styles/global.css';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 // 获取所有文章
@@ -22,16 +22,6 @@ const allPosts = posts
 const uniqueTags = ['全部', ...new Set(allPosts.map(post => post.tag))];
 ---
 
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="我的技术博客" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>文章 - DESIGNER.BLOG</title>
-  </head>
-  <body>
-    <BlogList client:load posts={allPosts} tags={uniqueTags} />
-  </body>
-</html>
+<BaseLayout title="文章 - DESIGNER.BLOG" description="我的技术博客">
+  <BlogList client:load posts={allPosts} tags={uniqueTags} />
+</BaseLayout>

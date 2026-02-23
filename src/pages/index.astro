@@ -4,7 +4,7 @@
  * 使用 React 组件渲染
  */
 import Blog from '../components/Blog';
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 // 获取最近的三篇文章
@@ -21,16 +21,6 @@ const recentPosts = posts
   }));
 ---
 
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="极简风格的个人博客" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>DESIGNER.BLOG</title>
-  </head>
-  <body>
-    <Blog client:load posts={recentPosts} />
-  </body>
-</html>
+<BaseLayout title="DESIGNER.BLOG" description="极简风格的个人博客">
+  <Blog client:load posts={recentPosts} />
+</BaseLayout>
