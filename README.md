@@ -128,6 +128,43 @@ npm run preview
 | Cloudflare Pages | `npx wrangler pages deploy dist` |
 | GitHub Pages | 使用 GitHub Actions |
 
+## 更新博客流程
+
+### 1. 本地开发
+
+```bash
+# 启动开发服务器
+npm run dev
+
+# 访问 http://localhost:4321 预览
+```
+
+### 2. 添加新文章
+
+在 `src/content/blog/` 目录下创建新的 Markdown 文件，参考"添加新文章"部分。
+
+### 3. 提交更新
+
+```bash
+# 添加所有修改
+git add .
+
+# 提交更新
+git commit -m "Add new post"
+
+# 推送到 GitHub
+git push
+```
+
+### 4. 自动部署
+
+Vercel 会自动检测到 GitHub 上的更新，并重新部署网站。
+
+- 访问 https://greedywolf.tech 查看网站
+- 访问 https://vercel.com/dashboard 查看部署状态
+
+---
+
 ## 命令列表
 
 | 命令 | 说明 |
@@ -135,8 +172,9 @@ npm run preview
 | `npm run dev` | 启动开发服务器 |
 | `npm run build` | 构建生产版本 |
 | `npm run preview` | 预览构建结果 |
-| `npx astro add react` | 添加 React 集成 |
-| `npx astro add tailwind` | 添加 Tailwind 集成 |
+| `git add .` | 添加所有修改 |
+| `git commit -m "..."` | 提交更新 |
+| `git push` | 推送到 GitHub |
 
 ## 注意事项
 
