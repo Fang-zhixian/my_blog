@@ -1,0 +1,33 @@
+---
+/**
+ * 文章详情页
+ */
+import BlogPost from '../../components/BlogPost';
+import '../../styles/global.css';
+import { getCollection } from 'astro:content';
+
+// 生成静态路径
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={post.data.description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{post.data.title} - DESIGNER.BLOG</title>
+  </head>
+  <body>
+    <BlogPost client:load post={post} />
+  </body>
+</html>

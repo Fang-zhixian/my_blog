@@ -1,0 +1,305 @@
+/**
+ * 个人博客主页面
+ * 风格：极简、高留白、现代排版
+ * 技术栈：React + Tailwind CSS + Framer Motion
+ */
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronRight, Menu, X, Github, Twitter, Mail } from 'lucide-react';
+
+// 模拟文章数据
+const posts = [
+  {
+    id: 1,
+    title: "构建极速网页的艺术：为什么我选择 Astro",
+    excerpt: "在性能为王的时代，如何通过零 JS 架构实现极致的加载速度？本文将探讨静态生成的核心价值...",
+    date: "2024-03-20",
+    tag: "技术",
+  },
+  {
+    id: 2,
+    title: "设计中的留白：少即是多",
+    excerpt: "简约并不意味着简单。通过合理的空间布局，我们可以引导读者的注意力，创造更高级的视觉体验。",
+    date: "2024-03-15",
+    tag: "设计",
+  },
+  {
+    id: 3,
+    title: "2024 前端趋势观察",
+    excerpt: "从 React Server Components 到边缘计算，前端生态正在经历一场深刻的变革...",
+    date: "2024-03-01",
+    tag: "行业",
+  }
+];
+
+const Navbar = ({ isScrolled, isMobileMenuOpen, setIsMobileMenuOpen }) => {
+  const navItems = [
+    { name: '首页', href: '/' },
+    { name: '文章', href: '/blog' },
+    { name: '关于', href: '/about' },
+  ];
+
+  return (
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      isScrolled ? 'bg-white/80 backdrop-blur-md border-b border-gray-100 py-4' : 'bg-transparent py-6'
+    }`}>
+      <div className="max-w-5xl mx-auto px-6 flex justify-between items-center">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="text-xl font-bold tracking-tighter"
+        >
+          <a href="/">DESIGNER<span className="text-gray-400">.BLOG</span></a>
+        </motion.div>
+
+        <div className="hidden md:flex space-x-8 text-sm font-medium">
+          {navItems.map((item, index) => (
+            <motion.a
+              key={item.name}
+              href={item.href}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="hover:text-gray-500 transition-colors"
+            >
+              {item.name}
+            </motion.a>
+          ))}
+        </div>
+
+        <div className="md:hidden">
+          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+const MobileMenu = ({ isOpen }) => {
+  const navItems = [
+    { name: '首页', href: '/' },
+    { name: '文章', href: '/blog' },
+    { name: '关于', href: '/about' },
+  ];
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          className="fixed top-16 left-0 w-full bg-white z-40 border-b border-gray-100 md:hidden overflow-hidden"
+        >
+          <div className="flex flex-col p-6 space-y-4">
+            {navItems.map((item) => (
+              <a key={item.name} href={item.href} className="text-lg font-medium">{item.name}</a>
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+const Hero = () => (
+  <section className="mb-32">
+    <div className="flex flex-col md:flex-row items-start gap-12">
+      {/* 头像区域 */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6 }}
+        className="flex-shrink-0"
+      >
+        <div className="relative">
+          <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl">
+            {/* 替换为你自己的头像路径 */}
+            <img
+              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+              alt="头像"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          {/* 状态指示器 */}
+          <div className="absolute bottom-2 right-2 w-5 h-5 bg-green-500 border-4 border-white rounded-full"></div>
+        </div>
+      </motion.div>
+
+      {/* 文字介绍区域 */}
+      <div className="flex-1">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-6"
+        >
+          你好，我是<span className="text-gray-400">陈志贤</span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-lg md:text-xl text-gray-500 leading-relaxed mb-8"
+        >
+          全栈开发者 / 设计师。这里是我记录技术探索、设计心得和生活感悟的地方。
+          追求极致的性能与简约的美学。
+        </motion.p>
+
+        {/* 个人标签 */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="flex flex-wrap gap-3 mb-8"
+        >
+          {['React', 'TypeScript', 'Astro', 'UI/UX'].map((tag, index) => (
+            <span
+              key={tag}
+              className="px-4 py-1.5 bg-gray-100 text-gray-600 text-sm font-medium rounded-full"
+            >
+              {tag}
+            </span>
+          ))}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="flex items-center gap-6"
+        >
+          <a href="/blog" className="flex items-center space-x-2 text-sm font-bold border-b-2 border-black pb-1 hover:text-gray-500 hover:border-gray-500 transition-all">
+            <span>查看我的文章</span>
+            <ChevronRight size={16} />
+          </a>
+          <div className="flex items-center gap-4 text-gray-400">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+              <Github size={20} className="hover:text-black cursor-pointer transition-colors" />
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+              <Twitter size={20} className="hover:text-black cursor-pointer transition-colors" />
+            </a>
+            <a href="mailto:hello@example.com">
+              <Mail size={20} className="hover:text-black cursor-pointer transition-colors" />
+            </a>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  </section>
+);
+
+const PostCard = ({ post, index }) => (
+  <motion.article
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay: index * 0.1 }}
+    className="group cursor-pointer"
+  >
+    <a href={`/blog/${post.slug}`} className="block">
+      <div className="flex flex-col md:flex-row md:items-baseline justify-between border-b border-gray-100 pb-12">
+        <div className="md:max-w-2xl">
+          <div className="flex items-center space-x-3 mb-4">
+            <span className="text-xs font-bold uppercase tracking-widest px-2 py-1 bg-gray-100 rounded">{post.tag}</span>
+            <span className="text-xs text-gray-400 font-medium">{post.date}</span>
+          </div>
+          <h3 className="text-2xl md:text-3xl font-bold mb-4 group-hover:text-gray-600 transition-colors">
+            {post.title}
+          </h3>
+          <p className="text-gray-500 leading-relaxed">
+            {post.excerpt}
+          </p>
+        </div>
+        <div className="mt-6 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity">
+          <ChevronRight size={24} className="text-gray-300" />
+        </div>
+      </div>
+    </a>
+  </motion.article>
+);
+
+const CTASection = () => (
+  <section className="mt-32 p-12 bg-black text-white rounded-3xl flex flex-col items-center text-center">
+    <h2 className="text-3xl md:text-5xl font-bold mb-6">准备好开始合作了吗？</h2>
+    <p className="text-gray-400 mb-10 max-w-md">无论是项目咨询还是简单的打个招呼，我都非常欢迎。</p>
+    <a href="mailto:hello@example.com" className="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors">
+      联系我
+    </a>
+  </section>
+);
+
+const Footer = () => {
+  const currentYear = new Date().getFullYear();
+  return (
+    <footer className="max-w-5xl mx-auto px-6 py-12 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+      <p>© {currentYear} 陈志贤. Built with Astro & Tailwind.</p>
+      <div className="flex space-x-6 mt-4 md:mt-0">
+        <a href="#" className="hover:text-black transition-colors">RSS Feed</a>
+        <a href="#" className="hover:text-black transition-colors">Privacy Policy</a>
+        <a href="#" className="hover:text-black transition-colors">Sitemap</a>
+      </div>
+    </footer>
+  );
+};
+
+interface Post {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  tag: string;
+}
+
+interface Props {
+  posts?: Post[];
+}
+
+export default function Blog({ posts = [] }: Props) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#fafafa] text-[#1a1a1a] font-sans selection:bg-black selection:text-white">
+      <Navbar
+        isScrolled={isScrolled}
+        isMobileMenuOpen={isMobileMenuOpen}
+        setIsMobileMenuOpen={setIsMobileMenuOpen}
+      />
+      <MobileMenu isOpen={isMobileMenuOpen} />
+
+      <main className="max-w-5xl mx-auto px-6 pt-32 pb-20">
+        <Hero />
+
+        <section id="posts">
+          <div className="flex justify-between items-end mb-12">
+            <h2 className="text-2xl font-bold uppercase tracking-widest text-gray-400">近期文章</h2>
+            <a href="/blog" className="text-sm font-medium hover:underline">浏览全部</a>
+          </div>
+
+          <div className="grid gap-12">
+            {posts.map((post, index) => (
+              <PostCard key={post.id} post={post} index={index} />
+            ))}
+          </div>
+        </section>
+
+        <CTASection />
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
