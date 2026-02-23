@@ -10,31 +10,6 @@ import Navbar from './layout/Navbar';
 import MobileMenu from './layout/MobileMenu';
 import Footer from './layout/Footer';
 
-// 模拟文章数据
-const posts = [
-  {
-    id: 1,
-    title: "构建极速网页的艺术：为什么我选择 Astro",
-    excerpt: "在性能为王的时代，如何通过零 JS 架构实现极致的加载速度？本文将探讨静态生成的核心价值...",
-    date: "2024-03-20",
-    tag: "技术",
-  },
-  {
-    id: 2,
-    title: "设计中的留白：少即是多",
-    excerpt: "简约并不意味着简单。通过合理的空间布局，我们可以引导读者的注意力，创造更高级的视觉体验。",
-    date: "2024-03-15",
-    tag: "设计",
-  },
-  {
-    id: 3,
-    title: "2024 前端趋势观察",
-    excerpt: "从 React Server Components 到边缘计算，前端生态正在经历一场深刻的变革...",
-    date: "2024-03-01",
-    tag: "行业",
-  }
-];
-
 const NAV_ITEMS = [
   { name: '首页', href: '/' },
   { name: '文章', href: '/blog' },
@@ -186,10 +161,10 @@ interface Post {
 }
 
 interface Props {
-  posts?: Post[];
+  posts: Post[];
 }
 
-export default function Blog({ posts = [] }: Props) {
+export default function Blog({ posts }: Props) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -224,7 +199,7 @@ export default function Blog({ posts = [] }: Props) {
 
           <div className="grid gap-12">
             {posts.map((post, index) => (
-              <PostCard key={post.id} post={post} index={index} />
+              <PostCard key={post.slug} post={post} index={index} />
             ))}
           </div>
         </section>
