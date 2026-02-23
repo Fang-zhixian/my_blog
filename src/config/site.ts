@@ -1,5 +1,5 @@
 export interface ContactLink {
-  platform: 'github' | 'twitter' | 'email' | 'linkedin' | 'website' | 'other';
+  platform: 'github' | 'x' | 'twitter' | 'email' | 'linkedin' | 'website' | 'other';
   label: string;
   href: string;
 }
@@ -18,9 +18,9 @@ export const siteConfig = {
       href: 'https://github.com/Fang-zhixian',
     },
     {
-      platform: 'twitter',
-      label: 'Twitter',
-      href: 'https://twitter.com',
+      platform: 'x',
+      label: 'X',
+      href: 'https://x.com/your_handle',
     },
     {
       platform: 'email',

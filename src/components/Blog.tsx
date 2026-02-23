@@ -5,7 +5,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronRight, Github, Twitter, Mail, Link2 } from 'lucide-react';
+import { ChevronRight, Github, Mail, Link2, X } from 'lucide-react';
 import Navbar from './layout/Navbar';
 import MobileMenu from './layout/MobileMenu';
 import Footer from './layout/Footer';
@@ -26,7 +26,8 @@ const FOOTER_LINKS = [
 
 const CONTACT_ICON_MAP = {
   github: Github,
-  twitter: Twitter,
+  x: X,
+  twitter: X,
   email: Mail,
   linkedin: Link2,
   website: Link2,
