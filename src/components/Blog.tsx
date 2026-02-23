@@ -31,6 +31,7 @@ const CONTACT_ICON_MAP = {
   email: Mail,
   linkedin: Link2,
   website: Link2,
+  xiaohongshu: Link2,
   other: Link2,
 } as const;
 

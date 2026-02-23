@@ -1,5 +1,5 @@
 export interface ContactLink {
-  platform: 'github' | 'x' | 'twitter' | 'email' | 'linkedin' | 'website' | 'other';
+  platform: 'github' | 'x' | 'twitter' | 'email' | 'linkedin' | 'website' | 'xiaohongshu' | 'other';
   label: string;
   href: string;
 }
@@ -25,7 +25,12 @@ export const siteConfig = {
     {
       platform: 'email',
       label: 'Email',
-      href: 'mailto:hello@example.com',
+      href: 'mailto:2634562642@qq.com',
+    },
+    {
+      platform: 'xiaohongshu',
+      label: '小红书',
+      href: 'https://www.xiaohongshu.com/user/profile/your_profile_id',
     },
   ] satisfies ContactLink[],
 };
