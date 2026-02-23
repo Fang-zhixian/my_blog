@@ -1,2 +1,19 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+/* Keep inline code and fenced code blocks visually distinct. */
+.prose :not(pre) > code {
+  @apply bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded text-[0.9em];
+}
+
+.prose pre {
+  @apply bg-gray-900 text-gray-100 rounded-xl overflow-x-auto my-8;
+}
+
+.prose pre code {
+  @apply bg-transparent text-inherit p-6 block;
+}
+
+.prose pre code span {
+  @apply bg-transparent;
+}

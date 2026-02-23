@@ -183,7 +183,6 @@ export default function BlogPost({ post, children }: Props) {
             prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
             prose-p:text-gray-600 prose-p:leading-relaxed
             prose-a:text-black prose-a:no-underline prose-a:border-b prose-a:border-black prose-a:hover:text-gray-600 prose-a:hover:border-gray-500
-            prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
             prose-pre:bg-gray-900 prose-pre:text-gray-100
             prose-blockquote:border-l-4 prose-blockquote:border-black prose-blockquote:pl-6 prose-blockquote:italic
             prose-img:rounded-xl
