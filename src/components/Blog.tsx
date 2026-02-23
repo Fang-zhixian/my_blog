@@ -9,6 +9,7 @@ import { ChevronRight, Github, Twitter, Mail } from 'lucide-react';
 import Navbar from './layout/Navbar';
 import MobileMenu from './layout/MobileMenu';
 import Footer from './layout/Footer';
+import type { PostSummary } from '../types/blog';
 
 const NAV_ITEMS = [
   { name: '首页', href: '/' },
@@ -111,7 +112,12 @@ const Hero = () => (
   </section>
 );
 
-const PostCard = ({ post, index }) => (
+interface PostCardProps {
+  post: PostSummary;
+  index: number;
+}
+
+const PostCard = ({ post, index }: PostCardProps) => (
   <motion.article
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -152,16 +158,8 @@ const CTASection = () => (
 );
 
 
-interface Post {
-  slug: string;
-  title: string;
-  excerpt: string;
-  date: string;
-  tag: string;
-}
-
 interface Props {
-  posts: Post[];
+  posts: PostSummary[];
 }
 
 export default function Blog({ posts }: Props) {

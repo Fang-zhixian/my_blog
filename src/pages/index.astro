@@ -6,19 +6,11 @@
 import Blog from '../components/Blog';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { getRecentPostSummaries } from '../utils/posts';
 
 // 获取最近的三篇文章
 const posts = await getCollection('blog');
-const recentPosts = posts
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3)
-  .map(post => ({
-    slug: post.slug,
-    title: post.data.title,
-    excerpt: post.data.description,
-    date: post.data.pubDate.toISOString().split('T')[0],
-    tag: post.data.tags?.[0] || '文章',
-  }));
+const recentPosts = getRecentPostSummaries(posts, 3);
 ---
 
 <BaseLayout title="DESIGNER.BLOG" description="极简风格的个人博客">

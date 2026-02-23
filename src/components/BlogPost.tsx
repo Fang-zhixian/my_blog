@@ -7,6 +7,7 @@ import { ChevronLeft, Clock, Calendar } from 'lucide-react';
 import Navbar from './layout/Navbar';
 import MobileMenu from './layout/MobileMenu';
 import Footer from './layout/Footer';
+import type { BlogEntry } from '../types/blog';
 
 const NAV_ITEMS = [
   { name: '首页', href: '/' },
@@ -17,7 +18,7 @@ const NAV_ITEMS = [
 const FOOTER_LINKS = [{ href: '/blog', label: '← 返回文章列表' }];
 
 interface Props {
-  post: any;
+  post: BlogEntry;
   children?: React.ReactNode;
 }
 

@@ -8,6 +8,7 @@ import { ChevronLeft } from 'lucide-react';
 import Navbar from './layout/Navbar';
 import MobileMenu from './layout/MobileMenu';
 import Footer from './layout/Footer';
+import type { PostSummary } from '../types/blog';
 
 const NAV_ITEMS = [
   { name: '首页', href: '/' },
@@ -20,7 +21,13 @@ const FOOTER_LINKS = [
   { href: '#', label: 'Privacy Policy' },
 ];
 
-const TagFilter = ({ tags, activeTag, onTagChange }) => (
+interface TagFilterProps {
+  tags: string[];
+  activeTag: string;
+  onTagChange: (tag: string) => void;
+}
+
+const TagFilter = ({ tags, activeTag, onTagChange }: TagFilterProps) => (
   <div className="flex flex-wrap gap-3 mb-12">
     {tags.map((tag) => (
       <button
@@ -38,7 +45,12 @@ const TagFilter = ({ tags, activeTag, onTagChange }) => (
   </div>
 );
 
-const PostCard = ({ post, index }) => (
+interface PostCardProps {
+  post: PostSummary;
+  index: number;
+}
+
+const PostCard = ({ post, index }: PostCardProps) => (
   <motion.article
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -69,16 +81,8 @@ const PostCard = ({ post, index }) => (
 );
 
 
-interface Post {
-  slug: string;
-  title: string;
-  excerpt: string;
-  date: string;
-  tag: string;
-}
-
 interface Props {
-  posts: Post[];
+  posts: PostSummary[];
   tags: string[];
 }
 
